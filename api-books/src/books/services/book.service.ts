@@ -17,17 +17,40 @@ export class BookService {
 
   async findAll() {
     return await this.bookRepository.find({
-      relations: ['books'],
+      relations: ['authors'],
     });
   }
 
   async findOne(id: number) {
-    return await this.bookRepository.findOne({
+    const response = await this.bookRepository.findOne({
       where: {
         id,
       },
-      relations: ['books'],
+      relations: ['authors'],
     });
+    if (!response) {
+      throw new Error('Libro no encontrado');
+    }
+    return response;
+  }
+
+  async getBookWithAveragePagesPerChapter(id: number) {
+    const book = await this.bookRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!book) {
+      throw new Error('Libro no encontrado');
+    }
+
+    const averagePagesPerChapter = book.pages / book.chapters;
+
+    return {
+      ...book,
+      averagePagesPerChapter: averagePagesPerChapter.toFixed(2),
+    };
   }
 
   async update(id: number, updateBookDto: UpdateBookDto) {

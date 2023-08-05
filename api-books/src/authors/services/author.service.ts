@@ -23,12 +23,16 @@ export class AuthorService {
   }
 
   async findOne(id: number) {
-    return await this.authorRepository.findOne({
+    const response = await this.authorRepository.findOne({
       where: {
         id,
       },
       relations: ['books'],
     });
+    if (!response) {
+      throw new Error('Author no encontrado');
+    }
+    return response;
   }
 
   async update(id: number, updateAuthorDto: UpdateAuthorDto) {

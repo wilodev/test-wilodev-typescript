@@ -22,7 +22,9 @@ export class Book {
   id: number;
 
   @ManyToMany(() => Author, (author) => author.books)
-  @JoinTable()
+  @JoinTable({
+    name: 'books_authors',
+  })
   authors: Author[];
 
   @Column({

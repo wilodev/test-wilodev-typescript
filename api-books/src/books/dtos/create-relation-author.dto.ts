@@ -1,10 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-
-export class CreateAuthorDto {
+export class CreateRelationAuthorDto {
   @ApiProperty({
-    description: 'The name of the author',
+    description: 'The authors of the book',
   })
   @IsNotEmpty()
-  name: string;
+  id: number;
 }

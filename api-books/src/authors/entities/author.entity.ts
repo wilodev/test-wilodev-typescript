@@ -22,7 +22,6 @@ export class Author {
   id: number;
 
   @ManyToMany(() => Book, (book) => book.authors)
-  @JoinTable()
   books: Book[];
 
   @Column({
